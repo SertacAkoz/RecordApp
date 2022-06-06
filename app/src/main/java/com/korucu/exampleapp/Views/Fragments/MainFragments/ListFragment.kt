@@ -1,5 +1,6 @@
 package com.korucu.exampleapp.Views.Fragments.MainFragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +15,8 @@ import com.korucu.exampleapp.Navigations.MainNavigationActions
 import com.korucu.exampleapp.R
 import com.korucu.exampleapp.Utils.SweetAlert
 import com.korucu.exampleapp.ViewModels.ListViewModel
+import com.korucu.exampleapp.Views.Activities.HamburgerActivity
+import com.korucu.exampleapp.Views.Activities.MainActivity
 import com.korucu.exampleapp.databinding.FragmentListBinding
 
 class ListFragment : Fragment() {
@@ -101,7 +104,9 @@ class ListFragment : Fragment() {
         viewModel.tokenError.observe(viewLifecycleOwner, Observer { tokenError ->
             if (tokenError){
                 SweetAlert.errorPopup(context, "Error", "Expired Token")
-                MainNavigationActions.actionListFragmentToLoginFragment()
+
+                val intent = Intent (activity, MainActivity::class.java)
+                activity?.startActivity(intent)
             }
         })
     }
@@ -111,13 +116,7 @@ class ListFragment : Fragment() {
     }
 
     private fun onClicks(){
-        binding.linearLayoutAddRecord.setOnClickListener {
-            MainNavigationActions.actionListFragmentToAddPasswordFragment()
-        }
 
-        binding.imageViewLogout.setOnClickListener {
-            viewModel.logout()
-        }
     }
 
 }

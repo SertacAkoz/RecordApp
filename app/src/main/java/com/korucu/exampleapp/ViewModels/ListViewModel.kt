@@ -1,11 +1,14 @@
 package com.korucu.exampleapp.ViewModels
 
 import android.app.Application
+import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import com.korucu.exampleapp.Models.Record
 import com.korucu.exampleapp.Navigations.MainNavigationActions
 import com.korucu.exampleapp.Services.RecordApiService
 import com.korucu.exampleapp.Utils.CustomSharedPreferences
+import com.korucu.exampleapp.Views.Activities.HamburgerActivity
+import com.korucu.exampleapp.Views.Activities.MainActivity
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
@@ -18,6 +21,8 @@ class ListViewModel(application: Application):BaseViewModel(application) {
     private val disposable = CompositeDisposable()
     private var customSharedPreferences = CustomSharedPreferences(getApplication())
     private val tokenString = customSharedPreferences.getToken()
+
+    val localApplication = application
 
     val passwordListFake = MutableLiveData<List<String>>()
     val error = MutableLiveData<Boolean>()
@@ -77,6 +82,13 @@ class ListViewModel(application: Application):BaseViewModel(application) {
 
     fun logout(){
         customSharedPreferences.saveToken("null")
-        MainNavigationActions.actionListFragmentToLoginFragment()
+
+        val intent = Intent (localApplication, MainActivity::class.java)
+        localApplication.startActivity(intent)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposable.clear()
     }
 }

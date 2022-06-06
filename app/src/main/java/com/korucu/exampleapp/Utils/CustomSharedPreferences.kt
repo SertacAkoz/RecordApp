@@ -9,6 +9,7 @@ class CustomSharedPreferences {
 
     companion object{
         private val TOKEN = "token"
+        private val EMAIL = "email"
         private var sharedPreferences:SharedPreferences? = null
 
         @Volatile private var instance:CustomSharedPreferences? = null
@@ -25,6 +26,14 @@ class CustomSharedPreferences {
             return CustomSharedPreferences()
         }
     }
+
+    fun saveEmail(email:String){
+        sharedPreferences?.edit(commit = true){
+            putString(EMAIL,email)
+        }
+    }
+
+    fun getEmail() = sharedPreferences?.getString(EMAIL, "null")
 
     fun saveToken(tokenString:String){
         sharedPreferences?.edit(commit = true){

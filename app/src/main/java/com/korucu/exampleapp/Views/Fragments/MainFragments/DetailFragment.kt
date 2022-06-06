@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.korucu.exampleapp.Navigations.HamburgerNavigationActions
 import com.korucu.exampleapp.Navigations.MainNavigationActions
 import com.korucu.exampleapp.R
 import com.korucu.exampleapp.Utils.SweetAlert
@@ -79,7 +80,7 @@ class DetailFragment : Fragment() {
         viewModel.response.observe(viewLifecycleOwner, Observer { response ->
             if (response.isSuccess == true){
                 SweetAlert.successPopup(context, "Success", response.message)
-                MainNavigationActions.actionDetailFragmentToListFragment()
+                HamburgerNavigationActions.actionDetailFragmentToNavList()
             }
         })
     }
@@ -88,7 +89,7 @@ class DetailFragment : Fragment() {
         var clipboardManager: ClipboardManager = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
         binding.btnUpdate.setOnClickListener {
-            recordId?.let { id -> MainNavigationActions.actionDetailFragmentToUpdateFragment(id) }
+            recordId?.let { id -> HamburgerNavigationActions.actionDetailFragmentToUpdateFragment(id) }
         }
 
         binding.btnDelete.setOnClickListener {

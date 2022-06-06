@@ -1,12 +1,15 @@
 package com.korucu.exampleapp.Views.Fragments.MainFragments
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.korucu.exampleapp.Dtos.UserLogin
@@ -14,6 +17,8 @@ import com.korucu.exampleapp.Navigations.MainNavigationActions
 import com.korucu.exampleapp.Utils.SweetAlert
 import com.korucu.exampleapp.Utils.Utils
 import com.korucu.exampleapp.ViewModels.LoginViewModel
+import com.korucu.exampleapp.Views.Activities.HamburgerActivity
+import com.korucu.exampleapp.Views.Activities.MainActivity
 import com.korucu.exampleapp.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
@@ -33,10 +38,6 @@ class LoginFragment : Fragment() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,6 +48,7 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         preapareFragment(binding.root)
 
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
@@ -62,7 +64,12 @@ class LoginFragment : Fragment() {
         viewModel.isLoggedIn.observe(viewLifecycleOwner, Observer { isLoggedIn ->
 
             if (isLoggedIn){
-                MainNavigationActions.actionLoginFragmentToListFragment()
+
+//                val changePage = Intent(MainActivity::class.java, HamburgerActivity::class.java)
+//                startActivity(changePage)
+
+                val intent = Intent (activity, HamburgerActivity::class.java)
+                activity?.startActivity(intent)
             }
             binding.progressBar.visibility = View.GONE
         })

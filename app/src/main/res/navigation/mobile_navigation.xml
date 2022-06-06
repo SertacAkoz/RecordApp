@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/listFragment2">
+    app:startDestination="@id/nav_list">
 
     <fragment
         android:id="@+id/nav_home"
@@ -23,7 +23,43 @@
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
     <fragment
-        android:id="@+id/listFragment2"
+        android:id="@+id/nav_list"
         android:name="com.korucu.exampleapp.Views.Fragments.MainFragments.ListFragment"
-        android:label="ListFragment" />
+        android:label="List" >
+        <action
+            android:id="@+id/action_nav_list_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_addRecord"
+        android:name="com.korucu.exampleapp.Views.Fragments.MainFragments.AddPasswordFragment"
+        android:label="Add Record"
+        tools:layout="@layout/fragment_add_password" />
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.korucu.exampleapp.Views.Fragments.MainFragments.DetailFragment"
+        android:label="Detail"
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_detailFragment_to_updateFragment"
+            app:destination="@id/updateFragment" />
+        <action
+            android:id="@+id/action_detailFragment_to_nav_list"
+            app:destination="@id/nav_list" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateFragment"
+        android:name="com.korucu.exampleapp.Views.Fragments.MainFragments.UpdateFragment"
+        android:label="Update"
+        tools:layout="@layout/fragment_update" >
+        <action
+            android:id="@+id/action_updateFragment_to_nav_list2"
+            app:destination="@id/nav_list" />
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
 </navigation>

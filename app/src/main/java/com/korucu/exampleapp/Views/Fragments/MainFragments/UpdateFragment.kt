@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.korucu.exampleapp.Models.RecordDetail
+import com.korucu.exampleapp.Navigations.HamburgerNavigationActions
 import com.korucu.exampleapp.Navigations.MainNavigationActions
 import com.korucu.exampleapp.R
 import com.korucu.exampleapp.Utils.SweetAlert
@@ -75,7 +76,7 @@ class UpdateFragment : Fragment() {
         viewModel.isUpdated.observe(viewLifecycleOwner, Observer {
             if (it.isSuccess == true){
                 SweetAlert.successPopup(context, "Success", it.message)
-                MainNavigationActions.actionUpdateFragmentToListFragment()
+                HamburgerNavigationActions.actionUpdateFragmentToNavList2()
             }else if (it.isSuccess == false){
                 SweetAlert.errorPopup(context, "Error", it.message)
             }

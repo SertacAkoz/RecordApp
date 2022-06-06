@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.korucu.exampleapp.Models.Record
+import com.korucu.exampleapp.Navigations.HamburgerNavigationActions
 import com.korucu.exampleapp.Navigations.MainNavigationActions
 import com.korucu.exampleapp.databinding.ListRowBinding
 
@@ -37,7 +38,7 @@ class PasswordAdapter(val recordList:ArrayList<Record>, val activity: Activity):
 //        }
 
         holder.view.linearLayoutListRow.setOnClickListener {
-            MainNavigationActions.actionListFragmentToDetailFragment(recordList[position].id!!)
+            HamburgerNavigationActions.actionNavListToDetailFragment(recordList[position].id!!)
         }
     }
 

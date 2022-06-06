@@ -11,6 +11,7 @@ import com.korucu.exampleapp.Dtos.RecordAdd
 import com.korucu.exampleapp.Navigations.MainNavigationActions
 import com.korucu.exampleapp.R
 import com.korucu.exampleapp.Utils.SweetAlert
+import com.korucu.exampleapp.Utils.toEditable
 import com.korucu.exampleapp.ViewModels.AddPasswordViewModel
 import com.korucu.exampleapp.ViewModels.LoginViewModel
 import com.korucu.exampleapp.databinding.FragmentAddPasswordBinding
@@ -19,6 +20,8 @@ class AddPasswordFragment : Fragment() {
 
     private lateinit var binding:FragmentAddPasswordBinding
     private lateinit var viewModel:AddPasswordViewModel
+
+    var btnPressed = false
 
     companion object{
         private var view:View? = null
@@ -59,6 +62,7 @@ class AddPasswordFragment : Fragment() {
 
     private fun onClicks(){
         binding.btnLogin.setOnClickListener {
+
             val recorName = binding.txtRecordName.text.toString()
             val recordDescription = binding.txtRecordDescription.text.toString()
             val recordUrl = binding.txtRecordUrl.text.toString()
@@ -67,17 +71,28 @@ class AddPasswordFragment : Fragment() {
             val newRecord = RecordAdd(recorName, recordDescription,recordUrl, recordPassword)
 
             viewModel.addRecord(newRecord)
+
+            btnPressed = true
         }
     }
 
     private fun observeLiveData(){
         viewModel.response.observe(viewLifecycleOwner, Observer {
-            if (it.isSuccess == true){
+            if (it.isSuccess == true && btnPressed){
                 SweetAlert.successPopup(context, "Success", it.message)
-                MainNavigationActions.actionAddPasswordFragmentToListFragment()
-            }else if(it.isSuccess == false){
+                clearForm()
+
+            }else if(it.isSuccess == false && btnPressed){
                 SweetAlert.errorPopup(context, "Error", it.message)
+                clearForm()
             }
         })
+    }
+
+    private fun clearForm(){
+        binding.txtRecordDescription.text = "".toEditable()
+        binding.txtRecordName.text = "".toEditable()
+        binding.txtRecordPassword.text = "".toEditable()
+        binding.txtRecordUrl.text = "".toEditable()
     }
 }
